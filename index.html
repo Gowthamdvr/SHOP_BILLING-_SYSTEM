@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBill - Shop Billing System</title>
+    <!-- Modern Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <h1>QuickBill</h1>
+                <p>Supermarket POS</p>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a href="admin.html" class="btn"
+                    style="background: white; border: 1px solid #ccc; color: #333; padding: 0.5rem 1rem; text-decoration: none;">Admin
+                    Dashboard</a>
+                <div class="date-display" id="currentDate"></div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Product Entry Section -->
+            <section class="card product-entry">
+                <div class="card-header">
+                    <h2>Add Product</h2>
+                </div>
+                <div class="card-body">
+                    <form id="productForm">
+                        <div class="form-group">
+                            <label for="productName">Product Name</label>
+                            <input type="text" id="productName" list="productListSuggestions"
+                                placeholder="e.g. Milk, Bread" autocomplete="off" required>
+                            <datalist id="productListSuggestions">
+                                <!-- Populated by JS -->
+                            </datalist>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productQty">Quantity</label>
+                                <input type="number" id="productQty" min="1" value="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productPrice">Price (₹)</label>
+                                <input type="number" id="productPrice" min="0.01" step="0.01" placeholder="0.00"
+                                    required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="addBtn">Add to Bill</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Bill Section -->
+            <section class="card bill-section">
+                <div class="card-header bill-header">
+                    <div class="bill-info">
+                        <h2>Current Invoice</h2>
+                        <span class="bill-no">Bill #<span id="billNumber">101</span></span>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-danger" id="clearBtn">Clear</button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="bill-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-right">Qty</th>
+                                <th class="text-right">Price</th>
+                                <th class="text-right">Total</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billBody">
+                            <!-- Rows will be added here -->
+                        </tbody>
+                    </table>
+
+                    <div id="emptyState" class="empty-state">
+                        <p>No items added yet.</p>
+                    </div>
+                </div>
+
+                <div class="card-footer totals-area">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="subTotal">₹0.00</span>
+                    </div>
+                    <div class="total-row">
+                        <span>GST (5%)</span>
+                        <span id="gstAmount">₹0.00</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Grand Total</span>
+                        <span id="grandTotal">₹0.00</span>
+                    </div>
+                    <button class="btn btn-success print-btn" id="printBtn">Print Invoice</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Print Layout (Hidden on screen, visible on print) -->
+    <div class="print-area">
+        <div class="print-header">
+            <h1>QuickBill Supermarket</h1>
+            <p>123 Market Street, City, State - 500001</p>
+            <p>Phone: +91 98765 43210</p>
+        </div>
+        <div class="print-meta">
+            <p><strong>Bill No:</strong> <span id="printBillNo"></span></p>
+            <p><strong>Date:</strong> <span id="printDate"></span></p>
+        </div>
+        <table class="print-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="printBody"></tbody>
+        </table>
+        <div class="print-totals">
+            <div class="p-row"><span>Subtotal:</span> <span id="printSubTotal"></span></div>
+            <div class="p-row"><span>GST (5%):</span> <span id="printGst"></span></div>
+            <div class="p-row total"><span>Grand Total:</span> <span id="printGrandTotal"></span></div>
+        </div>
+        <div class="print-footer">
+            <p>Thank you for shopping with us!</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
